@@ -1,0 +1,113 @@
+<odoo>
+    <data>
+        <record id="cmdb_form_inherit_sudo_aws" model="ir.ui.view">
+            <field name="name">CMDB Inherit</field>
+            <field name="model">sudo_cmdb.main</field>
+            <field name="inherit_id" ref="sudo_cmdb.cmdb_main_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='onboarding_email']" position="after">
+                    <button name="get_l2_account_access" string="Get L2 Access" class="btn btn-primary" type="object"
+                            groups="sudo_aws_access.sudo_aws_access_l2_access"
+                            attrs="{'invisible': ['|','|',('asset_type', '!=', 'Cloud Account'),('account_status', '!=', 'ready'),('account_type', '=', 'psaccount')]}"
+
+                    />
+
+                    <button name="get_l1_account_access" string="Get L1 Access" class="btn btn-primary" type="object"
+                            groups="sudo_aws_access.sudo_aws_access_l1_access"
+                            attrs="{'invisible': ['|','|',('asset_type', '!=', 'Cloud Account'),('account_status', '!=', 'ready'),('account_type', '=', 'psaccount')]}"
+                    />
+                    <button name="get_ps_account_access" string="Get PS Access" class="btn btn-primary" type="object"
+                            groups="sudo_aws_access.sudo_aws_access_l2_access"
+                            attrs="{'invisible': ['|','|',('asset_type', '!=', 'Cloud Account'),('account_status', '!=', 'ready'),('account_type', '!=', 'psaccount')]}"
+                    />
+                    <button name="get_support_access" string="Get Support Access" class="btn btn-primary" type="object"
+                            groups="sudo_aws_access.sudo_aws_access_support_access"
+                            attrs="{'invisible': ['|','|',('asset_type', '!=', 'Cloud Account'),('account_status', '!=', 'ready'),('account_type', '=', 'psaccount')]}"
+                    />
+                    <button name="get_readonly_access" string="Get Readonly Access" class="btn btn-primary"
+                            type="object"
+                            groups="sudo_aws_access.sudo_aws_access_support_access,sudo_aws_access.sudo_aws_access_l1_access,sudo_aws_access.sudo_aws_access_l2_access"
+                            attrs="{'invisible': ['|','|',('asset_type', '!=', 'Cloud Account'),('account_status', '!=', 'ready'),('account_type', '=', 'psaccount')]}"
+                    />
+                    <field string="Access List" name="account_type" invisible="1"/>
+
+                </xpath>
+                <xpath expr="//div[@class='oe_button_box']" position="inside">
+                    <button name="sudo_aws_access_list" type="object"
+                            class="oe_stat_button " icon="/sudo_aws_access/static/src/icons/aws.png">
+                        <field string="Access List" name="access_list_count" widget="statinfo"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+        <record id="sudo_aws_access_main_view_tree" model="ir.ui.view">
+            <field name="name">SUDO AWS Access List</field>
+            <field name="model">sudo_aws_access.main</field>
+            <field name="arch" type="xml">
+                <tree string="sudo_aws_access_main_tree">
+                    <field name="team_member"/>
+                    <field name="role_name"/>
+                    <field name="login_link" widget="url"/>
+                    <field name="role_edit_link" widget="url"/>
+                </tree>
+            </field>
+        </record>
+        <record id="sudo_aws_access_top_list_view_tree" model="ir.ui.view">
+            <field name="name">SUDO AWS Access List</field>
+            <field name="model">sudo_aws_access.main</field>
+            <field name="arch" type="xml">
+                <tree string="sudo_aws_access_top_list_view_tree">
+                    <field name="team_member"/>
+                    <field name="account_name"/>
+                    <field name="role_name"/>
+                    <field name="login_link" widget="url"/>
+                    <field name="role_edit_link" widget="url"/>
+                </tree>
+            </field>
+        </record>
+        <record id="sudo_aws_access_main_view_search" model="ir.ui.view">
+            <field name="name">SUDO AWS Acess Search View</field>
+            <field name="model">sudo_aws_access.main</field>
+            <field name="arch" type="xml">
+                <search string="sudo_aws_access_main_search">
+                    <field name="team_member"/>
+                    <field name="role_name"/>
+                    <field name="access_type"/>
+                    <separator/>
+                    <filter name="psaccess" string="PS Access" domain="[('access_type', '=', 'psaccess')]"/>
+                    <filter name="l1access" string="L1 Access" domain="[('access_type', '=', 'l1access')]"/>
+                    <filter name="l2access" string="L2 Access" domain="[('access_type', '=', 'l2access')]"/>
+                    <filter name="readonlyaccess" string="Read Only Access"
+                            domain="[('access_type', '=', 'readonlyaccess')]"/>
+                    <filter name="supportaccess" string="Suport Access"
+                            domain="[('access_type', '=', 'supportaccess')]"/>
+                    <filter name="billingaccess" string="Billing Access"
+                            domain="[('access_type', '=', 'billingaccess')]"/>
+                    <!--          <filter name="cancel" string="Cancelled"/>-->
+                    <separator/>
+                    <filter name="group_by_access" string="Access type" context="{'group_by': 'access_type'}"/>
+                    <filter name="group_by_team_member" string="Team Member" context="{'group_by': 'team_member'}"/>
+                    <filter name="group_by_aws_account" string="AWS Account" context="{'group_by': 'account_name'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="sudo_aws_access_main_view_action_window">
+            <field name="name">SUDO AWS Access</field>
+            <field name="res_model">sudo_aws_access.main</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_group_by_access': 1}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="sudo_aws_access_top_list_view_action_window">
+            <field name="name">SUDO AWS Access</field>
+            <field name="res_model">sudo_aws_access.main</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="sudo_aws_access_top_list_view_tree"/>
+            <field name="context">{'search_default_group_by_aws_account': 1}</field>
+        </record>
+        <menuitem id="sudo_aws_access_id" name="Access List" parent="sudo_cmdb.sudo_cmdb_main_root_menu"
+                  action="sudo_aws_access_main_view_action_window"/>
+
+    </data>
+</odoo>

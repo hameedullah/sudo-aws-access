@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+        <record id="sudo_aws_access_reject_reason" model="ir.ui.view">
+            <field name="name">sudo_aws_access.reject.reason.form</field>
+            <field name="model">sudo_aws_access.reject.reason</field>
+            <field name="arch" type="xml">
+                <form >
+                    <group>
+                        <group>
+                            <field name="reject_reason" required="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="rejection_reason" type="object" string="Reject"
+                                class="btn-primary"/>
+                        or
+                        <button string="_Cancel" class="btn-default btn-primary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+sudo_aws_access_base_group,sudo_aws_access.sudo_aws_access,model_sudo_aws_access_main,base.group_user,1,0,1,1
+sudo_aws_access,sudo_aws_access.reject.reason,model_sudo_aws_access_reject_reason,base.group_user,1,0,1,1
+
+sudo_aws_access_admin,sudo_aws_access.sudo_aws_access_admin,model_sudo_aws_access_main,sudo_aws_access.sudo_aws_access_admin_access,1,1,1,1
+
+sudo_apporval_access,sudo_apporval_access.sudo_approval_access,model_sudo_aws_access_approval,base.group_user,1,0,1,1
+sudo_apporval_access,sudo_aws_access.sudo_approval_access,model_sudo_aws_access_approval,sudo_aws_access.sudo_aws_access_approval_access,1,1,1,1
+sudo_apporval_accesss,sudo_aws_access.reject.reason,model_sudo_aws_access_main,sudo_aws_access.sudo_aws_access_approval_access,1,1,1,1
+

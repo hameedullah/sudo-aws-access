@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="res.groups" id="sudo_aws_access.sudo_aws_access_support_access">
+            <field name="name">AWS Support Access</field>
+        </record>
+        <record model="res.groups" id="sudo_aws_access.sudo_aws_access_l1_access">
+            <field name="name">AWS L1 Access</field>
+        </record>
+        <record model="res.groups" id="sudo_aws_access.sudo_aws_access_l2_access">
+            <field name="name">AWS L2 Access</field>
+        </record>
+        <record model="res.groups" id="sudo_aws_access.sudo_aws_access_admin_access">
+            <field name="name">AWS Access Admin</field>
+        </record>
+          <record model="res.groups" id="sudo_aws_access.sudo_aws_access_approval_access">
+            <field name="name">AWS Request for Approval</field>
+        </record>
+    </data>
+</odoo>
